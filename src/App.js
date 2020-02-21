@@ -11,11 +11,11 @@ export const ProductContext = createContext();
 export const CartContext = createContext();
 
 function App() {
-    const setLocalStorage = () => (localStorage.getItem("cart")===null) ? localStorage.setItem("cart", JSON.stringify([])) : null; 
+    const setLocalStorage = () => (localStorage.getItem("cart")===null) ? localStorage.setItem("cart", JSON.stringify([])) : console.log("key cart exists in local storage"); 
 	const [products] = useState(data);
 	const [cart, setCart] = useState( JSON.parse(localStorage.getItem("cart")===null) ? [] : JSON.parse(localStorage.getItem("cart")));
     console.log(cart)
-    useEffect(() => setLocalStorage(), [cart])
+    useEffect(() => setLocalStorage(), [])
 	const addItem = item => {
         setCart([...cart, item])
         localStorage.setItem("cart", JSON.stringify([...cart, item]))
