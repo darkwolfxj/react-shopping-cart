@@ -11,18 +11,19 @@ export const ProductContext = createContext();
 export const CartContext = createContext();
 
 function App() {
-    const setLocalStorage = () => (JSON.parse(localStorage.getItem("cart"))=== null) ? localStorage.setItem("cart", JSON.stringify([])) : null; 
+    const setLocalStorage = () => (localStorage.getItem("cart")===null) ? localStorage.setItem("cart", JSON.stringify([])) : null; 
 	const [products] = useState(data);
-	const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")));
+	const [cart, setCart] = useState( JSON.parse(localStorage.getItem("cart")===null) ? [] : JSON.parse(localStorage.getItem("cart")));
     console.log(cart)
-    useEffect(() => setLocalStorage, [cart])
+    useEffect(() => setLocalStorage(), [cart])
 	const addItem = item => {
         setCart([...cart, item])
         localStorage.setItem("cart", JSON.stringify([...cart, item]))
     }
     const removeItem = (id) => {
-        setCart([...cart.filter(i => id !== i.id)])
-        localStorage.setItem("cart", JSON.parse([cart]))
+        const newCart = [...cart.filter(i => id !== i.id)]
+        localStorage.setItem("cart", JSON.stringify(newCart))
+        setCart(newCart)
     }
     
 	return (
